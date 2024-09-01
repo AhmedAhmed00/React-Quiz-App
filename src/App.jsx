@@ -18,10 +18,7 @@ const initState = {
   remainingSeconds: null,
 };
 
-
-
 export default function App() {
-
   function reducer(currentState, action) {
     switch (action.type) {
       case "success":
@@ -73,19 +70,16 @@ export default function App() {
     }
   }
 
-
-
-
   const [state, dispatch] = useReducer(reducer, initState);
-
-
 
   const { questions, status, index, answer, points, remainingSeconds } = state;
   const numOfQuestions = questions.length;
   const maxPoints = questions.reduce((prev, cur) => prev + cur.points, 0);
 
   useEffect(() => {
-    fetch("http://localhost:9000/questions")
+    fetch(
+      "https://my-json-server.typicode.com/AhmedAhmed00/questionsApi/questions"
+    )
       .then((res) => res.json())
       .then((data) => {
         dispatch({ type: "success", payload: data });
@@ -96,8 +90,6 @@ export default function App() {
   return (
     <div className="app">
       <Header />
-
-
       <Main>
         {status === "loading" && <Loader />}
         {status === "Error" && <Error />}
@@ -135,7 +127,6 @@ export default function App() {
           />
         )}
       </Main>
-
     </div>
   );
 }
